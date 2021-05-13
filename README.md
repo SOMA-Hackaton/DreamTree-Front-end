@@ -17,7 +17,7 @@
 `MVVM`
 
 ## 🛠️ Technical Stack
-`VueJS` `Vuetify` `vue-naver-maps`
+`VueJS` `Vuetify` `vue-naver-maps` `Axios`
 
 ## :camera: Screenshot
 - **메인뷰**
