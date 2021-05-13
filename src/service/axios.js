@@ -6,7 +6,7 @@ const axiosResource = axios.create({
       ? "https://dreamtree-dywzy.run.goorm.io/"
       : process.env.VUE_APP_AUTH_URL,
   withCredentials: true,
-  headers: { 'Access-Control-Allow-Origin': '*' }
+  headers: { "Access-Control-Allow-Origin": "*" },
 });
 
 export default axiosResource;

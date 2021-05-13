@@ -41,23 +41,21 @@ export default Vue.extend({
       stores: [],
     };
   },
-    created() {
-        Api.getAllStores()
-        .then(stores => {
-            this.stores = stores
-        })
+  created() {
+    Api.getAllStores().then((stores) => {
+      this.stores = stores;
+    });
+  },
+  methods: {
+    onListBtnClicked() {
+      this.showList = true;
     },
-    methods: {
-        onListBtnClicked() {
-            this.showList = true;
-        },
-        onListCloseClicked() {
-            this.showList = false;
-        },
-        async onMapMoved(event) {
-            const stores = await Api.getStoresByPosition(event.lat, event.lng, 1000)
-            this.stores = stores
-        }
+    onListCloseClicked() {
+      this.showList = false;
+    },
+    async onMapMoved(event) {
+      const stores = await Api.getStoresByPosition(event.lat, event.lng, 1000);
+      this.stores = stores;
     },
   },
 });
