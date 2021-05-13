@@ -36,10 +36,6 @@ export default Vue.extend({
             stores: []
         };
     },
-    components: {
-        MapContainer,
-        StoreList,
-    },
     created() {
         this.onMapMoved()
     },
@@ -52,7 +48,6 @@ export default Vue.extend({
         },
         async onMapMoved() {
             const stores = await Api.getAllStores()
-            console.log('moved')
             this.stores = stores
         }
     },

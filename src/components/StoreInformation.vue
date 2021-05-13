@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto my-12" max-width="375">
-    <img height="200" width="375" :src="store.imageurl" />
+    <img height="200" width="375" :src="store.imgurl" />
 
     <v-card-title
       ><v-icon class="mr-2">storefront</v-icon> {{ store.name }}</v-card-title
@@ -47,7 +47,9 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+
+export default Vue.extend({
   props: ["store"],
-};
+});
 </script>
