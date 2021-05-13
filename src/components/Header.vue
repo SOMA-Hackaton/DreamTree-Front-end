@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar color="indigo" flat>
+    <v-app-bar color="indigo" absolute>
       <v-container class="py-0">
         <v-row align="center" justify="center">
           <v-col cols="4">

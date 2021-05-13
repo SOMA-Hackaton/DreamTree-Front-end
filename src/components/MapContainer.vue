@@ -27,7 +27,6 @@
 <script>
 import Vue from 'vue';
 import StoreInfomation from './StoreInformation.vue';
-
 export default Vue.extend({
     name: 'MapContainer',
     components: {
@@ -116,7 +115,6 @@ export default Vue.extend({
     },
     mounted() {},
 });
-
 function setMarkerIcon(type) {
     switch (type) {
         case '제과점':

@@ -26,9 +26,7 @@
 import Vue from "vue";
 import MapContainer from "../components/MapContainer.vue";
 import StoreList from "../components/StoreList.vue";
-
 import { Api } from "../service/api";
-
 export default Vue.extend({
     name: 'Home',
     components: {
@@ -69,7 +67,7 @@ export default Vue.extend({
         }
     },
   },
-});
+);
 </script>
 
 <style scoped>
@@ -79,7 +77,6 @@ export default Vue.extend({
   left: 5vh;
   z-index: 5;
 }
-
 .map-container {
   position: static;
 }
