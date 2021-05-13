@@ -1,77 +1,91 @@
 <template>
-    <div class="store-list-container">
-        <v-card class="mx-auto card-list" tile>
-            <v-list dense>
-                <v-subheader>REPORTS</v-subheader>
-                <v-list-item-group v-model="selectedItem" color="primary">
-                    <v-list-item v-for="(item, i) in items" :key="i">
-                        <v-list-item-icon>
-                            <v-icon v-text="item.icon"></v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title
-                                v-text="item.text"
-                            ></v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-list-item-group>
-            </v-list>
-            <v-btn
-                class="list-close-btn"
-                color="rgb(255,255,255)"
-                elevation="0"
-                @click="onCloseBtnClicked"
-                small
-                plain
-            >
-                <v-icon color="rgb(0,0,0)"> mdi-window-close </v-icon>
-            </v-btn>
-        </v-card>
-    </div>
+  <div class="store-list-container">
+    <v-row align="center" justify="center">
+      <v-col cols="10" align="right">
+        <v-text-field
+          class="ml-3 pl-3 mr-0 pr-0"
+          v-model="storename"
+          append-icon="mdi-magnify"
+          label="매장검색"
+          single-line
+          hide-details
+          v-on:keyup.enter="onSearchStores(storename)"
+          @click:append="onSearchStores(storename)"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="2" align="right">
+        <v-btn
+          class="list-close-btn mr-0 pr-0"
+          color="rgb(255,255,255)"
+          elevation="0"
+          @click="onCloseBtnClicked"
+          small
+          plain
+        >
+          <v-icon color="rgb(0,0,0)"> mdi-window-close </v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
+     <v-virtual-scroll
+        :items="stores"
+        item-height="120px"
+      >
+        <template v-slot:default="{ item }">
+      <v-divider v-if="item!=stores[0]"></v-divider>
+      <v-list-item-content class="pl-3 ml-3" :key="item.address">
+        <v-list-item-title style="font-size: 20px; font-weight: bold"
+          ><v-icon class="mr-2">restaurant</v-icon>{{ item.name
+          }}<v-chip class="ma-2">{{ item.type }}</v-chip></v-list-item-title
+        >
+        <v-list-item-subtitle style="font-size: 15px">{{
+          item.address
+        }}</v-list-item-subtitle>
+        <v-rating
+          :value="item.rating"
+          color="amber"
+          dense
+          half-increments
+          readonly
+          size="14"
+        ></v-rating>
+      </v-list-item-content>
+        </template>
+        </v-virtual-scroll>
+  </div>
 </template>
 
 <script>
-import Vue from 'vue';
+import { Api } from "../service/api";
 
-export default Vue.extend({
-    name: 'StoreList',
-    data() {
-        return {
-            selectedItem: 1,
-            items: [
-                /** 임시 리스트 */
-                { text: 'Real-Time', icon: 'mdi-clock' },
-                { text: 'Audience', icon: 'mdi-account' },
-                { text: 'Conversions', icon: 'mdi-flag' },
-            ],
-        };
+export default {
+  props: {
+    stores: Array,
+  },
+  data: () => ({
+      storename: "",
+  }),
+  methods: {
+    onCloseBtnClicked() {
+      this.$emit("list-close");
     },
-    methods: {
-        onCloseBtnClicked() {
-            this.$emit('list-close')
-        },
+    async onSearchStores(storename) {
+        this.stores = await Api.getStoresByName(storename);
+        console.log(this.stores);
     },
-});
+  },
+};
 </script>
-
-<style scoped>
+<style>
 .store-list-container {
-    z-index: 10;
-    width: 25%;
-    height: 100vh;
-    position: absolute;
-    background-color: aliceblue;
+  z-index: 10;
+  width: 400px;
+  height: 100vh;
+  position: absolute;
+  background-color: white;
 }
-
-.card-list {
-    position: relative;
-    height: 100vh;
-}
-
 .list-close-btn {
-    position: absolute;
-    top: 1em;
-    right: 1em;
-    width: 1em;
+  top: 1em;
+  right: 1em;
+  width: 1em;
 }
 </style>
