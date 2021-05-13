@@ -10,7 +10,10 @@
             <v-icon> mdi-view-list </v-icon>
         </v-btn>
         <store-list v-if="showList" @list-close="onListCloseClicked" />
-        <map-container class="map-container" />
+        <map-container class="map-container"
+        :storeMarkers="stores"
+        @move="onMapMoved"
+        />
     </div>
 </template>
 
@@ -18,6 +21,8 @@
 import Vue from 'vue';
 import MapContainer from '../components/MapContainer.vue';
 import StoreList from '../components/StoreList.vue';
+
+import { Api } from '../service/api'
 
 export default Vue.extend({
     name: 'Home',
@@ -28,12 +33,15 @@ export default Vue.extend({
     data() {
         return {
             showList: false,
+            stores: []
         };
     },
-
     components: {
         MapContainer,
         StoreList,
+    },
+    created() {
+        this.onMapMoved()
     },
     methods: {
         onListBtnClicked() {
@@ -42,6 +50,11 @@ export default Vue.extend({
         onListCloseClicked() {
             this.showList = false;
         },
+        async onMapMoved() {
+            const stores = await Api.getAllStores()
+            console.log('moved')
+            this.stores = stores
+        }
     },
 });
 </script>

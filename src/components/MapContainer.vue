@@ -4,6 +4,7 @@
         :mapOptions="mapOptions"
         :initLayers="initLayers"
         @load="onLoad"
+        @dragend="emitMoveEvent"
     >
         <naver-info-window
             class="info-window"
@@ -11,13 +12,16 @@
             :isOpen="info"
             :marker="marker"
         >
+            <!-- 마커 클릭 시 컴포넌트 -->
             <div class="info-window-container">
                 <h1>{{ hello }}</h1>
             </div>
         </naver-info-window>
         <naver-marker
-            :lat="37.566213"
-            :lng="126.901633"
+            v-for="(store, index) in storeMarkers" :key="index"
+            :store="store"
+            :lat="store.latitude"
+            :lng="store.longitude"
             @click="onMarkerClicked"
             @load="onMarkerLoaded"
         />
@@ -29,6 +33,9 @@ import Vue from 'vue';
 
 export default Vue.extend({
     name: 'MapContainer',
+    props: {
+        storeMarkers: Array,
+    },
     data() {
         return {
             info: false,
@@ -73,6 +80,9 @@ export default Vue.extend({
         onClickListBtn(event) {
             this.showList = true;
         },
+        emitMoveEvent(event) {
+            this.$emit('move')
+        }
     },
     mounted() {},
 });
