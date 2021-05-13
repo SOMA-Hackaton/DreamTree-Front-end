@@ -22,7 +22,7 @@
 ## :camera: Screenshot
 - **메인뷰**
 
-<img width="1680" height="500" alt="기본화면" src="https://user-images.githubusercontent.com/43667316/118195322-f9d3f600-b485-11eb-981d-1cbb61b34839.png">
+<img width="1680" height="500" alt="기본화면" src="https://user-images.githubusercontent.com/12512382/118198729-6a7e1100-b48c-11eb-918e-8c3b5c2e1b06.png">
 
 - **검색 기능**
 
