@@ -45,7 +45,7 @@ export default Vue.extend({
             mapOptions: {
                 lat: 37.576227432762906,
                 lng: 126.89254733575699,
-                zoom: 13,
+                zoom: 15,
                 zoomControl: false,
                 mapTypeControl: false,
             },
@@ -80,10 +80,9 @@ export default Vue.extend({
             this.showList = true;
         },
         emitMoveEvent(event) {
-            this.$emit('move');
+            this.$emit('move', {lat: event.coord._lat, lng: event.coord._lng});
         },
         onClickedMap() {
-            console.log(this.selectedStore)
             if (this.showInfo) {
                 this.showInfo = false
             }
