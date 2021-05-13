@@ -1,5 +1,4 @@
 import axiosResource from "./axios";
-
 export class Api {
     static async getAllStores () {
         try {
@@ -11,6 +10,26 @@ export class Api {
              * NetworkError
              */
             console.log(err)
+            return 0;
+        }
+    }
+
+    static async getStoresByPosition (latitude, logitude, distance) {
+        try {
+            const response = await axiosResource.get('/location', {
+                params: {
+                    latitude,
+                    logitude,
+                    distance
+                }
+            });
+            return response.data
+        }
+        catch (err) {
+            /**
+             * NetworkError
+             */
+            console.log(err);
             return 0;
         }
     }
