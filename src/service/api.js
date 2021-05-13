@@ -23,7 +23,7 @@ export class Api {
                     distance
                 }
             });
-            return response.data.stores
+            return response.data
         }
         catch (err) {
             /**
