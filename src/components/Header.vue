@@ -20,10 +20,10 @@
               style="font-size: 16px"
               >잔액 확인
             </v-btn>
-            <v-btn text dark min-width="0" href="/apk/app-release.apk" download>
+            <v-btn text dark min-width="0" onclick="window.open('./apk/apkQR.png','_blank')">
               <v-icon dark> mdi-android </v-icon>
             </v-btn>
-            <v-btn text dark min-width="0">
+            <v-btn text dark min-width="0" href="https://github.com/SOMA-Hackaton/DreamTree-Front-end" target="_blank">
               <v-icon medium>info</v-icon>
             </v-btn>
           </v-col>
