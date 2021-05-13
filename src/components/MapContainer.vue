@@ -7,10 +7,11 @@
         @dragend="emitMoveEvent"
         @click="onClickedMap"
     >
-        <store-infomation 
-        class="store-info"
-        v-if="showInfo"
-        :store="selectedStore" />
+        <store-infomation
+            class="store-info"
+            v-if="showInfo"
+            :store="selectedStore"
+        />
         <naver-marker
             v-for="(store, index) in storeMarkers"
             :key="index"
@@ -43,9 +44,9 @@ export default Vue.extend({
             map: null,
             isCTT: false,
             mapOptions: {
-                lat: 37.576227432762906,
-                lng: 126.89254733575699,
-                zoom: 15,
+                lat: 37.5625533,
+                lng: 126.9231889,
+                zoom: 14,
                 zoomControl: false,
                 mapTypeControl: false,
             },
@@ -60,34 +61,78 @@ export default Vue.extend({
             ],
             selectedStore: null,
             showInfo: false,
+            markerClustering: null,
         };
+    },
+    computed: {
+        markers() {
+            const markers = [];
+            for (let i = 0; i < this.storeMarkers.length; i++) {
+                markers.push(
+                    new naver.maps.LatLng(
+                        this.storeMarkers[i].latitude,
+                        this.storeMarkers[i].longitude
+                    )
+                );
+            }
+            return markers;
+        },
     },
     methods: {
         onLoad(vue) {
             this.map = vue;
         },
-        onWindowLoad(that) {
-
-        },
+        onWindowLoad(that) {},
         onMarkerClicked(selected) {
-            this.selectedStore = selected
-            this.showInfo = true
+            this.selectedStore = selected;
+            this.showInfo = true;
         },
         onMarkerLoaded(vue) {
-
+            const icon = setMarkerIcon(vue.$attrs.store.type);
+            vue.marker.setIcon({
+                content: [
+                    `<img src=${icon} style="width: 38px; heigth: 38px;" >`,
+                    `</img>`,
+                ].join('')
+            });
         },
         onClickListBtn(event) {
             this.showList = true;
         },
         emitMoveEvent(event) {
-            this.$emit('move', {lat: event.coord._lat, lng: event.coord._lng});
+            if (this.map.getZoom() > 15)
+                this.storeMarkers = []
+            this.$emit('move', {
+                lat: event.coord._lat,
+                lng: event.coord._lng,
+                zoom: this.map.getZoom(),
+            });
         },
         onClickedMap() {
             if (this.showInfo) {
-                this.showInfo = false
+                this.showInfo = false;
             }
-        }
+        },
     },
     mounted() {},
 });
+
+function setMarkerIcon(type) {
+    switch (type) {
+        case '제과점':
+            return './bakery.svg';
+        case '중식':
+            return './chinese_food.svg';
+        case '패스트푸드':
+            return './fast_food.svg';
+        case '일식':
+            return './japanese_food.svg';
+        case '한식':
+            return './korean_food.svg';
+        case '양식':
+            return './western_food.svg';
+        default:
+            return './basic.svg';
+    }
+}
 </script>

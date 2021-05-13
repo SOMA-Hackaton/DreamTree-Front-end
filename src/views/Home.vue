@@ -33,7 +33,8 @@ export default Vue.extend({
     data() {
         return {
             showList: false,
-            stores: []
+            stores: [],
+            loadedAll: false
         };
     },
     created() {
@@ -50,8 +51,16 @@ export default Vue.extend({
             this.showList = false;
         },
         async onMapMoved(event) {
-            const stores = await Api.getStoresByPosition(event.lat, event.lng, 1000)
-            this.stores = stores
+            if (event.zoom > 15) {
+                const stores = await Api.getStoresByPosition(event.lat, event.lng, 1000)
+                this.loadedAll = false
+                this.stores = stores
+            }
+            else if (event.zoom <= 15 && !this.loadedAll) {
+                const stores = await Api.getAllStores()
+                this.loadedAll = true
+                this.stores = stores
+            }
         }
     },
 });
