@@ -37,7 +37,10 @@ export default Vue.extend({
         };
     },
     created() {
-        this.onMapMoved()
+        Api.getAllStores()
+        .then(stores => {
+            this.stores = stores
+        })
     },
     methods: {
         onListBtnClicked() {
@@ -46,8 +49,8 @@ export default Vue.extend({
         onListCloseClicked() {
             this.showList = false;
         },
-        async onMapMoved() {
-            const stores = await Api.getAllStores()
+        async onMapMoved(event) {
+            const stores = await Api.getStoresByPosition(event.lat, event.lng, 1000)
             this.stores = stores
         }
     },
