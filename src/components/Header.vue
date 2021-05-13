@@ -15,12 +15,12 @@
           <v-col cols="8" align="right">
             <v-btn
               text
-              href="https://m.shinhancard.com/mob/MOBFM064N/MOBFM064R01.shc"
+              onclick="window.open('https://m.shinhancard.com/mob/MOBFM064N/MOBFM064R01.shc')"
               color="white"
               style="font-size: 16px"
               >잔액 확인
             </v-btn>
-            <v-btn text dark min-width="0">
+            <v-btn text dark min-width="0" href="/apk/app-release.apk" download>
               <v-icon dark> mdi-android </v-icon>
             </v-btn>
             <v-btn text dark min-width="0">
