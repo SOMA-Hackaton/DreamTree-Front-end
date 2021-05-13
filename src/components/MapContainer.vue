@@ -5,24 +5,19 @@
         :initLayers="initLayers"
         @load="onLoad"
         @dragend="emitMoveEvent"
+        @click="onClickedMap"
     >
-        <naver-info-window
-            class="info-window"
-            @load="onWindowLoad"
-            :isOpen="info"
-            :marker="marker"
-        >
-            <!-- 마커 클릭 시 컴포넌트 -->
-            <div class="info-window-container">
-                <h1>{{ hello }}</h1>
-            </div>
-        </naver-info-window>
+        <store-infomation 
+        class="store-info"
+        v-if="showInfo"
+        :store="selectedStore" />
         <naver-marker
-            v-for="(store, index) in storeMarkers" :key="index"
+            v-for="(store, index) in storeMarkers"
+            :key="index"
             :store="store"
             :lat="store.latitude"
             :lng="store.longitude"
-            @click="onMarkerClicked"
+            @click="onMarkerClicked(store)"
             @load="onMarkerLoaded"
         />
     </naver-maps>
@@ -30,9 +25,13 @@
 
 <script>
 import Vue from 'vue';
+import StoreInfomation from './StoreInformation.vue';
 
 export default Vue.extend({
     name: 'MapContainer',
+    components: {
+        StoreInfomation,
+    },
     props: {
         storeMarkers: Array,
     },
@@ -44,11 +43,11 @@ export default Vue.extend({
             map: null,
             isCTT: false,
             mapOptions: {
-                lat: 37.566213,
-                lng: 126.901633,
-                zoom: 15,
+                lat: 37.576227432762906,
+                lng: 126.89254733575699,
+                zoom: 13,
                 zoomControl: false,
-                mapTypeControl: true,
+                mapTypeControl: false,
             },
             initLayers: [
                 'BACKGROUND',
@@ -59,39 +58,37 @@ export default Vue.extend({
                 'CHINESE',
                 'JAPANESE',
             ],
+            selectedStore: null,
+            showInfo: false,
         };
-    },
-    computed: {
-        hello() {
-            return `Hello, World! × ${this.count}`;
-        },
     },
     methods: {
         onLoad(vue) {
             this.map = vue;
         },
-        onWindowLoad(that) {},
-        onMarkerClicked(event) {
-            this.info = !this.info;
+        onWindowLoad(that) {
+
+        },
+        onMarkerClicked(selected) {
+            this.selectedStore = selected
+            this.showInfo = true
         },
         onMarkerLoaded(vue) {
-            this.marker = vue.marker;
+
         },
         onClickListBtn(event) {
             this.showList = true;
         },
         emitMoveEvent(event) {
-            this.$emit('move')
+            this.$emit('move');
+        },
+        onClickedMap() {
+            console.log(this.selectedStore)
+            if (this.showInfo) {
+                this.showInfo = false
+            }
         }
     },
     mounted() {},
 });
 </script>
-
-<style scoped>
-.info-window-container {
-    padding: 10px;
-    width: 300px;
-    height: 100px;
-}
-</style>
