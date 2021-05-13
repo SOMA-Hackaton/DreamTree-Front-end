@@ -33,4 +33,22 @@ export class Api {
             return 0;
         }
     }
+
+    static async getStoresByName(storename) {
+        try {
+            const response = await axiosResource.get('/keyword', {
+                params: {
+                    storename
+                }
+            });
+            return response.data
+        }
+        catch (err) {
+            /**
+             * NetworkError
+             */
+            console.log(err);
+            return 0;
+        }
+    }
 }
